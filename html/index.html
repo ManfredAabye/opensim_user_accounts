@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 10px;
+        }
+        form {
+            margin-bottom: 20px;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+        .alert {
+            padding: 10px;
+            background-color: #f44336;
+            color: white;
+            margin-bottom: 15px;
+        }
+        .success {
+            background-color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <h1>User Management</h1>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        {% for category, message in messages %}
+          <div class="alert {{ category }}">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+    {% endwith %}
+    
+    <h2>User anlegen</h2>
+    <form method="post" action="/create_user">
+        <input type="text" name="first_name" placeholder="Vorname" required>
+        <input type="text" name="last_name" placeholder="Nachname" required>
+        <input type="password" name="password" placeholder="Passwort" required>
+        <input type="text" name="principal_id" placeholder="Principal ID" required>
+        <button type="submit">User anlegen</button>
+    </form>
+
+    <h2>Passwort ändern</h2>
+    <form method="post" action="/change_password">
+        <input type="text" name="principal_id" placeholder="Principal ID" required>
+        <input type="password" name="new_password" placeholder="Neues Passwort" required>
+        <button type="submit">Passwort ändern</button>
+    </form>
+
+    <h2>User löschen</h2>
+    <form method="post" action="/delete_user">
+        <input type="text" name="principal_id" placeholder="Principal ID" required>
+        <button type="submit">User löschen</button>
+    </form>
+</body>
+</html>
